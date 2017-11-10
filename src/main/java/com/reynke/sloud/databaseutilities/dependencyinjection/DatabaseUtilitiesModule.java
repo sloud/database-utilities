@@ -18,6 +18,6 @@ public class DatabaseUtilitiesModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(IDatabaseConfiguration.class).toInstance(databaseConfiguration);
-        bind(IDatabase.class).to(databaseConfiguration.getDatabaseType().getDatabaseClass());
+        bind(IDatabase.class).toProvider(DatabaseProvider.class);
     }
 }
