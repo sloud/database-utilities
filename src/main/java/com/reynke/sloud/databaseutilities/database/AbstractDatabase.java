@@ -9,10 +9,12 @@ import com.reynke.sloud.databaseutilities.logging.ILoggerAware;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.hikaricp.internal.HikariCPConnectionProvider;
+import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Driver;
 import java.util.HashMap;
@@ -55,7 +57,7 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
 
     @Override
     public boolean isOpen() {
-        return sessionFactory != null && sessionFactory.isOpen();
+        return sessionFactory != null && !sessionFactory.isClosed();
     }
 
     @Override
@@ -112,18 +114,26 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
             configuration.addPackage(packageName);
         }
 
-        // Load annotated classes
+        // Load annotated classes dynamically
         for (Class<? extends IEntity> annotatedClass : databaseConfiguration.getAnnotatedClasses()) {
             logger.log(Level.INFO, "Adding annotated class \"" + annotatedClass.getName() + "\" ...");
+
+            // https://stackoverflow.com/questions/27304580/mapping-entities-from-outside-classpath-loaded-dynamically
+            Thread.currentThread().setContextClassLoader(annotatedClass.getClassLoader());
+
             configuration.addAnnotatedClass(annotatedClass);
         }
+
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties())
+                .build();
 
         try {
 
             // Finally build the session factory ... nice!
 
             logger.log(Level.INFO, "Building session factory ...");
-            sessionFactory = configuration.buildSessionFactory();
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
         } catch (HibernateException e) {
 
