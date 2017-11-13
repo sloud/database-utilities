@@ -52,7 +52,14 @@ public abstract class AbstractRepository<T extends IEntity> extends AbstractData
             throw new RuntimeException(e);
         }
 
-        T entity = session.get(entityType, id);
+        T entity = null;
+
+        try {
+            entity = entityType.cast(session.get(entityType, id));
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+        }
+
         session.close();
 
         return entity;
