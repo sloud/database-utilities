@@ -1,6 +1,7 @@
 package com.reynke.sloud.databaseutilities.configuration;
 
 import com.reynke.sloud.databaseutilities.database.IDatabase;
+import com.reynke.sloud.databaseutilities.database.MariaDbDatabase;
 import com.reynke.sloud.databaseutilities.database.MySqlDatabase;
 import com.reynke.sloud.databaseutilities.database.PostgreSqlDatabase;
 
@@ -13,6 +14,11 @@ public enum DatabaseType {
      * Represents a {@link MySqlDatabase}.
      */
     MY_SQL(MySqlDatabase.class),
+
+    /**
+     * Represents a {@link MariaDbDatabase}.
+     */
+    MARIA_DB(MariaDbDatabase.class),
 
     /**
      * Represents a {@link PostgreSqlDatabase}.

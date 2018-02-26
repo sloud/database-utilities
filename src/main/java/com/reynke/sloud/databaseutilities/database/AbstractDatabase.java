@@ -9,17 +9,14 @@ import com.reynke.sloud.databaseutilities.logging.ILoggerAware;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.hikaricp.internal.HikariCPConnectionProvider;
-import org.hibernate.service.ServiceRegistry;
 
 import java.sql.Driver;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -85,26 +82,25 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
         logger.log(Level.INFO, "Setting database up using provider: " + this.getProviderClass().getName());
         logger.log(Level.INFO, "Setting database up using driver: " + this.getDriverClass().getName());
 
-        hibernateProperties.setProperty("hibernate.dialect", this.getDialectClass().getName());
-        hibernateProperties.setProperty("hibernate.connection.provider_class", this.getProviderClass().getName());
-        hibernateProperties.setProperty("hibernate.connection.driver_class", this.getDriverClass().getName());
-        hibernateProperties.setProperty("hibernate.connection.url", this.getJdbcUrl());
-        hibernateProperties.setProperty("hibernate.connection.username", databaseConfiguration.getUsername());
-        hibernateProperties.setProperty("hibernate.connection.password", databaseConfiguration.getPassword());
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", databaseConfiguration.getHbm2ddlOption().getValue());
+        hibernateProperties.put(AvailableSettings.DIALECT, this.getDialectClass().getName());
+        hibernateProperties.put(AvailableSettings.CONNECTION_PROVIDER, this.getProviderClass().getName());
+        hibernateProperties.put(AvailableSettings.DRIVER, this.getDriverClass().getName());
+        hibernateProperties.put(AvailableSettings.URL, this.getJdbcUrl());
+        hibernateProperties.put(AvailableSettings.USER, databaseConfiguration.getUsername());
+        hibernateProperties.put(AvailableSettings.PASS, databaseConfiguration.getPassword());
+        hibernateProperties.put(AvailableSettings.HBM2DDL_AUTO, databaseConfiguration.getHbm2ddlOption().getValue());
 
         // Apply extra properties by the database configuration (may override existing properties)
         for (Map.Entry<String, String> extraProperty : this.getDatabaseConfiguration().getExtraProperties().entrySet()) {
-            hibernateProperties.setProperty(extraProperty.getKey(), extraProperty.getValue());
+            hibernateProperties.put(extraProperty.getKey(), extraProperty.getValue());
         }
 
         // Apply extra properties defined for this database (may override existing properties)
         for (Map.Entry<String, String> extraProperty : this.getExtraProperties().entrySet()) {
-            hibernateProperties.setProperty(extraProperty.getKey(), extraProperty.getValue());
+            hibernateProperties.put(extraProperty.getKey(), extraProperty.getValue());
         }
 
         Configuration configuration = new Configuration();
-        configuration.addProperties(hibernateProperties);
 
         logger.log(Level.INFO, "Adding packages and annotated classes from configuration ...");
 
@@ -114,26 +110,39 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
             configuration.addPackage(packageName);
         }
 
+//        Collection<ClassLoader> classLoaders = new ArrayList<>();
+
         // Load annotated classes dynamically
         for (Class<? extends IEntity> annotatedClass : databaseConfiguration.getAnnotatedClasses()) {
             logger.log(Level.INFO, "Adding annotated class \"" + annotatedClass.getName() + "\" ...");
 
             // https://stackoverflow.com/questions/27304580/mapping-entities-from-outside-classpath-loaded-dynamically
-            Thread.currentThread().setContextClassLoader(annotatedClass.getClassLoader());
+//            Thread.currentThread().setContextClassLoader(annotatedClass.getClassLoader());
 
+//            try {
+//                annotatedClass.getClassLoader().loadClass(annotatedClass.getName());
+//            } catch (ClassNotFoundException e) {
+//                logger.log(Level.SEVERE, "Errooooor");
+//                e.printStackTrace();
+//            }
+
+//            classLoaders.add(annotatedClass.getClassLoader());
             configuration.addAnnotatedClass(annotatedClass);
         }
 
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties())
-                .build();
+        // @TODO Remove debug log
+//        System.out.println(hibernateProperties.get(AvailableSettings.CLASSLOADERS));
+
+//        hibernateProperties.put(AvailableSettings.CLASSLOADERS, classLoaders);
+
+        configuration.addProperties(hibernateProperties);
 
         try {
 
             // Finally build the session factory ... nice!
 
             logger.log(Level.INFO, "Building session factory ...");
-            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+            sessionFactory = configuration.buildSessionFactory();
 
         } catch (HibernateException e) {
 
