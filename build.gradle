@@ -19,7 +19,7 @@ targetCompatibility = 1.8
 
 def libraryGroupId = 'com.reynke.sloud'
 def libraryArtifactId = 'databaseutilities'
-def libraryVersion = '1.0-SNAPSHOT'
+def libraryVersion = '1.0.0'
 def libraryMainClassName = 'SloudDatabaseUtilities'
 
 group libraryGroupId + '.' + libraryArtifactId
