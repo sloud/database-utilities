@@ -6,15 +6,25 @@
  * user guide available at https://docs.gradle.org/4.1/userguide/tutorial_java_projects.html
  */
 
+plugins {
+    id "com.jfrog.artifactory" version "4.6.2"
+}
+
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-group 'com.reynke.sloud.databaseutilities'
-version '1.0-SNAPSHOT'
-mainClassName = group + '.SloudDatabaseUtilities'
+def libraryGroupId = 'com.reynke.sloud'
+def libraryArtifactId = 'databaseutilities'
+def libraryVersion = '1.0-SNAPSHOT'
+def libraryMainClassName = 'SloudDatabaseUtilities'
+
+group libraryGroupId + '.' + libraryArtifactId
+version libraryVersion
+mainClassName = group + '.' + libraryMainClassName
 
 repositories {
     mavenCentral()
@@ -46,4 +56,31 @@ jar {
     from {
         configurations.extraLibs.collect { it.isDirectory() ? it : zipTree(it) }
     }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+artifactory {
+    contextUrl = 'https://artifactory.reynke.com/artifactory'
+    publish {
+        repository {
+            repoKey = version.endsWith('SNAPSHOT') ? 'libs-snapshot-local' : 'libs-release-local'
+            username = reynke_artifactory_username
+            password = reynke_artifactory_password
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+        }
+    }
+}
+
+artifactoryPublish {
+    dependsOn jar
 }
