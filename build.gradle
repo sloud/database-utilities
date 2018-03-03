@@ -22,7 +22,7 @@ targetCompatibility = 1.8
 
 def libraryGroupId = 'com.reynke.sloud'
 def libraryArtifactId = 'databaseutilities'
-def libraryVersion = '1.0.0'
+def libraryVersion = '1.0.1'
 def libraryMainClassName = 'SloudDatabaseUtilities'
 
 group libraryGroupId + '.' + libraryArtifactId
@@ -40,6 +40,9 @@ configurations {
 
 dependencies {
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
+    extraLibs group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
+    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0'
     extraLibs group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
     extraLibs group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.1.2'
     extraLibs group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
