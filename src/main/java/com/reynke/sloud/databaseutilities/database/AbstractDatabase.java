@@ -26,28 +26,23 @@ import java.util.logging.Logger;
 @Singleton
 public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
 
-    private Logger logger;
-    private IDatabaseConfiguration databaseConfiguration;
+    private final Logger logger;
+    private final IDatabaseConfiguration databaseConfiguration;
+
     private SessionFactory sessionFactory = null;
 
     @Inject
     AbstractDatabase(IDatabaseConfiguration databaseConfiguration, Logger logger) {
-
         this.databaseConfiguration = databaseConfiguration;
         this.logger = logger;
 
         try {
-
             logger.log(Level.INFO, "Trying to set up the database ...");
             this.configure();
-
         } catch (DatabaseUtilitiesException e) {
-
             logger.log(Level.SEVERE, "Failed to set up database: " + e.getMessage());
             throw new RuntimeException(e);
-
         } finally {
-
             logger.log(Level.INFO, "Successfully set up database.");
         }
     }
@@ -69,9 +64,8 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
 
     @Override
     public void configure() throws DatabaseUtilitiesException {
-
         if (this.isOpen()) {
-            throw new DatabaseUtilitiesException("This database connections is already up and running.");
+            throw new DatabaseUtilitiesException("This database connection is already up and running.");
         }
 
         // Set properties retrieved by the configuration and
@@ -138,26 +132,19 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
         configuration.addProperties(hibernateProperties);
 
         try {
-
             // Finally build the session factory ... nice!
-
             logger.log(Level.INFO, "Building session factory ...");
             sessionFactory = configuration.buildSessionFactory();
-
         } catch (HibernateException e) {
-
             logger.log(Level.SEVERE, "Error building session factory: " + e.getMessage());
             throw new RuntimeException(e);
-
         } finally {
-
             logger.log(Level.INFO, "Successfully built session factory!");
         }
     }
 
     @Override
     public Session openSession() throws DatabaseUtilitiesException {
-
         if (!this.isOpen()) {
             throw new DatabaseUtilitiesException("This database is not yet configured. Call the \"configure()\" method on this database to set it up.");
         }
@@ -171,7 +158,6 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
 
     @Override
     public void closeDatabaseConnection() throws DatabaseUtilitiesException {
-
         if (!this.isOpen()) {
             throw new DatabaseUtilitiesException("This database is not configured. Closing it wouldn't make sense. Call the \"configure()\" method on this database to set it up.");
         }

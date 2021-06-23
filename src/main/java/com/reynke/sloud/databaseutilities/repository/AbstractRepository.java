@@ -25,7 +25,6 @@ public abstract class AbstractRepository<T extends IEntity<I>, I extends Seriali
 
     @Override
     public void create(T entity) {
-
         Session session;
 
         try {
@@ -67,7 +66,6 @@ public abstract class AbstractRepository<T extends IEntity<I>, I extends Seriali
 
     @Override
     public Set<T> findAll(Class<T> entityType) {
-
         Session session;
 
         try {
@@ -94,7 +92,6 @@ public abstract class AbstractRepository<T extends IEntity<I>, I extends Seriali
 
     @Override
     public T update(T entity) {
-
         Session session;
 
         try {
@@ -119,7 +116,6 @@ public abstract class AbstractRepository<T extends IEntity<I>, I extends Seriali
 
     @Override
     public void delete(T entity) {
-
         Session session;
 
         try {

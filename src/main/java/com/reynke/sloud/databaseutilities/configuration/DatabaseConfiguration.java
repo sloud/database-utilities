@@ -26,7 +26,6 @@ public class DatabaseConfiguration implements IDatabaseConfiguration {
     private Hbm2ddlOption hbm2ddlOption;
 
     public DatabaseConfiguration() {
-
         // Set default attribute values.
         databaseType = DatabaseType.MY_SQL;
         host = "localhost";
@@ -110,7 +109,6 @@ public class DatabaseConfiguration implements IDatabaseConfiguration {
 
     @Override
     public void addPackage(String packagePath) {
-
         if (this.packages.contains(packagePath)) {
             return;
         }

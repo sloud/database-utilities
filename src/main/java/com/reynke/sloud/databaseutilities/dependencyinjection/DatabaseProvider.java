@@ -13,8 +13,8 @@ import javax.inject.Provider;
  */
 public class DatabaseProvider implements Provider<IDatabase> {
 
-    private IDatabaseConfiguration databaseConfiguration;
-    private Injector injector;
+    private final IDatabaseConfiguration databaseConfiguration;
+    private final Injector injector;
 
     @Inject
     public DatabaseProvider(IDatabaseConfiguration databaseConfiguration, Injector injector) {
