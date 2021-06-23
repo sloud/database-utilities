@@ -7,6 +7,7 @@ import com.reynke.sloud.databaseutilities.exception.DatabaseUtilitiesException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * @author Nicklas Reincke (contact@reynke.com)
  */
-public abstract class AbstractRepository<T extends IEntity> extends AbstractDatabaseAwareRepository<T> {
+public abstract class AbstractRepository<T extends IEntity<I>, I extends Serializable> extends AbstractDatabaseAwareRepository<T, I> {
 
     @Inject
     public AbstractRepository(IDatabase database, Logger logger) {
@@ -42,8 +43,7 @@ public abstract class AbstractRepository<T extends IEntity> extends AbstractData
     }
 
     @Override
-    public T findOneById(Class<T> entityType, long id) {
-
+    public T findOneById(Class<T> entityType, I id) {
         Session session;
 
         try {

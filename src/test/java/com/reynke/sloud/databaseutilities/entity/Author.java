@@ -14,12 +14,12 @@ import java.util.LinkedHashSet;
 @Entity
 @Table(name = "authors")
 @Repository(type = AuthorRepository.class)
-public class Author implements IEntity {
+public class Author implements IEntity<Long> {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    private long id;
+    private Long id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -38,7 +38,7 @@ public class Author implements IEntity {
     }
 
     @Override
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

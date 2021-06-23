@@ -14,10 +14,9 @@ import java.util.Map;
  */
 @Singleton
 public class RepositoryFactory implements IRepositoryFactory {
+    private final Injector injector;
 
-    private Injector injector;
-
-    private static Map<String, IRepository<?>> repositoryCache;
+    private static final Map<String, IRepository<?, ?>> repositoryCache;
 
     static {
         repositoryCache = new HashMap<>();
@@ -29,8 +28,7 @@ public class RepositoryFactory implements IRepositoryFactory {
     }
 
     @Override
-    public IRepository<?> getRepository(Class<? extends IEntity> entityType) throws DatabaseUtilitiesException {
-
+    public IRepository<?, ?> getRepository(Class<? extends IEntity<?>> entityType) throws DatabaseUtilitiesException {
         // Load repository from cache if it was found by its entity types class path.
         if (repositoryCache.containsKey(entityType.getName())) {
             return repositoryCache.get(entityType.getName());
@@ -46,7 +44,7 @@ public class RepositoryFactory implements IRepositoryFactory {
 
         // Get the repository type related to the entity to tell the injector where
         // to inject dependencies and finally return the created repository.
-        IRepository repository = injector.getInstance(repositoryAnnotation.type());
+        IRepository<?, ?> repository = injector.getInstance(repositoryAnnotation.type());
 
         // Add repository to cache.
         repositoryCache.put(entityType.getName(), repository);

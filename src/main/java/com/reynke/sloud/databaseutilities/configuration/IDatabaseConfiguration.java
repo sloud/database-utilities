@@ -44,11 +44,11 @@ public interface IDatabaseConfiguration {
 
     void addPackage(String packagePath);
 
-    List<Class<? extends IEntity>> getAnnotatedClasses();
+    List<Class<? extends IEntity<?>>> getAnnotatedClasses();
 
-    void setAnnotatedClasses(List<Class<? extends IEntity>> annotatedClasses);
+    void setAnnotatedClasses(List<Class<? extends IEntity<?>>> annotatedClasses);
 
-    void addAnnotatedClass(Class<? extends IEntity> annotatedClass);
+    void addAnnotatedClass(Class<? extends IEntity<?>> annotatedClass);
 
     Map<String, String> getExtraProperties();
 

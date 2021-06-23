@@ -21,7 +21,7 @@ public class DatabaseConfiguration implements IDatabaseConfiguration {
     private String username;
     private String password;
     private List<String> packages;
-    private List<Class<? extends IEntity>> annotatedClasses;
+    private List<Class<? extends IEntity<?>>> annotatedClasses;
     private Map<String, String> extraProperties;
     private Hbm2ddlOption hbm2ddlOption;
 
@@ -119,18 +119,17 @@ public class DatabaseConfiguration implements IDatabaseConfiguration {
     }
 
     @Override
-    public List<Class<? extends IEntity>> getAnnotatedClasses() {
+    public List<Class<? extends IEntity<?>>> getAnnotatedClasses() {
         return annotatedClasses;
     }
 
     @Override
-    public void setAnnotatedClasses(List<Class<? extends IEntity>> annotatedClasses) {
+    public void setAnnotatedClasses(List<Class<? extends IEntity<?>>> annotatedClasses) {
         this.annotatedClasses = annotatedClasses;
     }
 
     @Override
-    public void addAnnotatedClass(Class<? extends IEntity> annotatedClass) {
-
+    public void addAnnotatedClass(Class<? extends IEntity<?>> annotatedClass) {
         if (this.annotatedClasses.contains(annotatedClass)) {
             return;
         }

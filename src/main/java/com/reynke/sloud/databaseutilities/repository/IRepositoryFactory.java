@@ -25,5 +25,5 @@ public interface IRepositoryFactory {
      * @return The repository on success.
      * @throws DatabaseUtilitiesException Thrown if the desired class is nor a repository.
      */
-    IRepository<?> getRepository(Class<? extends IEntity> entityType) throws DatabaseUtilitiesException;
+    IRepository<?, ?> getRepository(Class<? extends IEntity<?>> entityType) throws DatabaseUtilitiesException;
 }

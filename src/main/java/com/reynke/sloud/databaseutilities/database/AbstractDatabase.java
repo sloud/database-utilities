@@ -113,7 +113,7 @@ public abstract class AbstractDatabase implements IDatabase, ILoggerAware {
 //        Collection<ClassLoader> classLoaders = new ArrayList<>();
 
         // Load annotated classes dynamically
-        for (Class<? extends IEntity> annotatedClass : databaseConfiguration.getAnnotatedClasses()) {
+        for (Class<? extends IEntity<?>> annotatedClass : databaseConfiguration.getAnnotatedClasses()) {
             logger.log(Level.INFO, "Adding annotated class \"" + annotatedClass.getName() + "\" ...");
 
             // https://stackoverflow.com/questions/27304580/mapping-entities-from-outside-classpath-loaded-dynamically

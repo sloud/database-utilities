@@ -26,7 +26,7 @@ public interface IDatabaseEntitiesAware {
     /**
      * @return A list containing annotated classes.
      */
-    default List<Class<? extends IEntity>> getAnnotatedClasses() {
+    default List<Class<? extends IEntity<?>>> getAnnotatedClasses() {
         return new ArrayList<>();
     }
 }

@@ -5,12 +5,13 @@ import com.reynke.sloud.databaseutilities.database.IDatabase;
 import com.reynke.sloud.databaseutilities.entity.IEntity;
 import com.reynke.sloud.databaseutilities.logging.ILoggerAware;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 /**
  * @author Nicklas Reincke (contact@reynke.com)
  */
-public abstract class AbstractDatabaseAwareRepository<T extends IEntity> implements IRepository<T>, ILoggerAware {
+public abstract class AbstractDatabaseAwareRepository<T extends IEntity<I>, I extends Serializable> implements IRepository<T, I>, ILoggerAware {
 
     private Logger logger;
     private IDatabase database;

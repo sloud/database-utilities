@@ -3,6 +3,7 @@ package com.reynke.sloud.databaseutilities.repository;
 import com.reynke.sloud.databaseutilities.database.IDatabase;
 import com.reynke.sloud.databaseutilities.entity.IEntity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Set;
  *
  * @author Nicklas Reincke (contact@reynke.com)
  */
-public interface IRepository<T extends IEntity> {
+public interface IRepository<T extends IEntity<I>, I extends Serializable> {
 
     IDatabase getDatabase();
 
@@ -28,7 +29,7 @@ public interface IRepository<T extends IEntity> {
      * @param id         The unique identifier of the entity.
      * @return The entity from the database. "null" otherwise.
      */
-    T findOneById(Class<T> entityType, long id);
+    T findOneById(Class<T> entityType, I id);
 
     Set<T> findAll(Class<T> entityType);
 

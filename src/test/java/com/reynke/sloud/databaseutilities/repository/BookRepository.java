@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * @author Nicklas Reincke (contact@reynke.com)
  */
 @Singleton
-public class BookRepository extends AbstractRepository<Book> {
+public class BookRepository extends AbstractRepository<Book, Long> {
 
     @Inject
     public BookRepository(IDatabase database, Logger logger) {
