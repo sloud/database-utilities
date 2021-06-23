@@ -17,6 +17,6 @@ jobs:
           java-version: '16'
           distribution: 'adopt'
       - name: Publish package
-        run: gradle publish
+        run: gradle publish --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
