@@ -1,33 +1,20 @@
-buildscript {
-    repositories {
-        jcenter()
-
-    }
-    dependencies {
-        // Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
-    }
+plugins {
+    id 'java'
+    id 'maven-publish'
 }
-
-allprojects {
-    apply plugin: "com.jfrog.artifactory"
-}
-
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 def libraryGroupId = 'com.reynke.sloud'
 def libraryArtifactId = 'databaseutilities'
-def libraryVersion = '1.0.1'
+def libraryVersion = '1.0.2'
 def libraryMainClassName = 'SloudDatabaseUtilities'
 
 group libraryGroupId + '.' + libraryArtifactId
 version libraryVersion
-mainClassName = group + '.' + libraryMainClassName
+
+def mainClassName = group + '.' + libraryMainClassName
 
 repositories {
     mavenCentral()
@@ -65,35 +52,20 @@ jar {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/sloud/database-utilities")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        gpr(MavenPublication) {
+            from(components.java)
         }
     }
-}
-
-artifactory {
-    contextUrl = 'https://artifactory.reynke.com/artifactory'
-    publish {
-        repository {
-            repoKey = version.endsWith('SNAPSHOT') ? 'gradle-dev-local' : 'gradle-release-local'
-            username = reynke_artifactory_username
-            password = reynke_artifactory_password
-        }
-        defaults {
-            publications('mavenJava')
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'gradle-release'
-            username = reynke_artifactory_username
-            password = reynke_artifactory_password
-            maven = true
-        }
-    }
-}
-
-artifactoryPublish {
-    dependsOn jar
 }
