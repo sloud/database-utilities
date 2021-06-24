@@ -42,7 +42,7 @@ dependencies {
 jar {
     manifest {
         attributes 'Implementation-Title': rootProject.name,
-                'Implementation-Version': version,
+                'Implementation-Version': archiveVersion,
                 'Main-Class': mainClassName
     }
 
