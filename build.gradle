@@ -8,7 +8,7 @@ targetCompatibility = 16
 
 def libraryGroupId = 'com.reynke.sloud'
 def libraryArtifactId = rootProject.name
-def libraryVersion = '1.0.4'
+def libraryVersion = '1.0.5'
 def libraryMainClassName = 'SloudDatabaseUtilities'
 
 group libraryGroupId

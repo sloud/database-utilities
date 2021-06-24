@@ -54,6 +54,11 @@ brew install --cask adoptopenjdk16-jre
 
 ## Changelog
 
+**1.0.5**
+
+* Better documentation
+* Add new database types and deprecate generic ones
+
 **1.0.4**
 
 * Set source and target compatibility Java version to `16`
