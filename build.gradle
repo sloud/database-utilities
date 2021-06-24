@@ -26,16 +26,16 @@ configurations {
 }
 
 dependencies {
-    implementation group: 'com.google.inject', name: 'guice', version: '4.1.0'
-    extraLibs group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
-    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
-    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0'
-    extraLibs group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
-    extraLibs group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.1.2'
-    extraLibs group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-    extraLibs group: 'com.zaxxer', name: 'HikariCP', version: '2.7.2'
-    extraLibs group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.2.12.Final'
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    implementation group: 'com.google.inject', name: 'guice', version: '5.0.1'
+    extraLibs group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-core', version: '3.0.1'
+    extraLibs group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '3.0.1'
+    extraLibs group: 'mysql', name: 'mysql-connector-java', version: '8.0.24'
+    extraLibs group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.3'
+    extraLibs group: 'org.postgresql', name: 'postgresql', version: '42.2.22'
+    extraLibs group: 'com.zaxxer', name: 'HikariCP', version: '4.0.3'
+    extraLibs group: 'org.hibernate', name: 'hibernate-hikaricp', version: '5.5.0.Final'
+    testImplementation group: 'junit', name: 'junit', version: '8.9.0'
     configurations.implementation.extendsFrom(configurations.extraLibs)
 }
 
