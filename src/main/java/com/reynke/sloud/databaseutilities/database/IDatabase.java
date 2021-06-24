@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * @author Nicklas Reincke (contact@reynke.com)
  */
-@ImplementedBy(MySqlDatabase.class)
+@ImplementedBy(MySQL5Database.class)
 public interface IDatabase {
 
     /**

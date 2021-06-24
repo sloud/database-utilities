@@ -13,10 +13,10 @@ import java.util.logging.Logger;
  * @author Nicklas Reincke (contact@reynke.com)
  */
 @Singleton
-public class PostgreSqlDatabase extends AbstractDatabase {
+public class PostgreSQL9Database extends AbstractDatabase {
 
     @Inject
-    public PostgreSqlDatabase(IDatabaseConfiguration databaseConfiguration, Logger logger) {
+    public PostgreSQL9Database(IDatabaseConfiguration databaseConfiguration, Logger logger) {
         super(databaseConfiguration, logger);
     }
 

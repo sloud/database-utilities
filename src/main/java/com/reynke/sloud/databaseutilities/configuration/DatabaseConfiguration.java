@@ -27,7 +27,7 @@ public class DatabaseConfiguration implements IDatabaseConfiguration {
 
     public DatabaseConfiguration() {
         // Set default attribute values.
-        databaseType = DatabaseType.MY_SQL;
+        databaseType = DatabaseType.MY_SQL_5;
         host = "localhost";
         port = 3306;
         username = "root";

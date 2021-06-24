@@ -5,6 +5,7 @@ import com.google.inject.Singleton;
 import com.reynke.sloud.databaseutilities.configuration.IDatabaseConfiguration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.MySQL5Dialect;
+import org.hibernate.dialect.MySQL8Dialect;
 
 import java.sql.Driver;
 import java.util.logging.Logger;
@@ -13,16 +14,16 @@ import java.util.logging.Logger;
  * @author Nicklas Reincke (contact@reynke.com)
  */
 @Singleton
-public class MySqlDatabase extends AbstractDatabase {
+public class MySQL8Database extends AbstractDatabase {
 
     @Inject
-    public MySqlDatabase(IDatabaseConfiguration databaseConfiguration, Logger logger) {
+    public MySQL8Database(IDatabaseConfiguration databaseConfiguration, Logger logger) {
         super(databaseConfiguration, logger);
     }
 
     @Override
     public Class<? extends Dialect> getDialectClass() {
-        return MySQL5Dialect.class;
+        return MySQL8Dialect.class;
     }
 
     @Override
