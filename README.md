@@ -13,6 +13,10 @@ brew install --cask adoptopenjdk16-jre
 
 ## Changelog
 
+**1.0.3**
+
+* Change artifact and group IDs
+
 **1.0.2**
 
 * Code cleanup
