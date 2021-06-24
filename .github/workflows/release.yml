@@ -19,4 +19,5 @@ jobs:
       - name: Publish package
         run: gradle publish --warning-mode=all
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
