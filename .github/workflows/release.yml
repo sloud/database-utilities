@@ -17,6 +17,6 @@ jobs:
           java-version: '16'
           distribution: 'adopt'
       - name: Publish package
-        run: gradle publish
+        run: gradle publish --warning-mode=all
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
