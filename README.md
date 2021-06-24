@@ -13,6 +13,10 @@ brew install --cask adoptopenjdk16-jre
 
 ## Changelog
 
+**1.0.4**
+
+* Set source and target compatibility Java version to `16`
+
 **1.0.3**
 
 * Change artifact and group IDs
