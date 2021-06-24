@@ -7,14 +7,14 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 def libraryGroupId = 'com.reynke.sloud'
-def libraryArtifactId = 'databaseutilities'
-def libraryVersion = '1.0.2'
+def libraryArtifactId = rootProject.name
+def libraryVersion = '1.0.3'
 def libraryMainClassName = 'SloudDatabaseUtilities'
 
-group libraryGroupId + '.' + libraryArtifactId
+group libraryGroupId
 version libraryVersion
 
-def mainClassName = group + '.' + libraryMainClassName
+def mainClassName = group + '.' + libraryArtifactId + '.' + libraryMainClassName
 
 repositories {
     mavenCentral()
